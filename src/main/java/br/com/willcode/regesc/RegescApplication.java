@@ -1,18 +1,18 @@
 package br.com.willcode.regesc;
-
-import br.com.willcode.regesc.orm.Professor;
-import br.com.willcode.regesc.repository.ProfessorRepository;
+import br.com.willcode.regesc.service.CrudProfessorService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.util.Scanner;
+
 @SpringBootApplication
 public class RegescApplication implements CommandLineRunner {
 
-	private ProfessorRepository repository;
+	private CrudProfessorService professorService;
 
-	public RegescApplication(ProfessorRepository repository) {
-		this.repository = repository;
+	public RegescApplication(CrudProfessorService professorService) {
+		this.professorService = professorService;
 	}
 
 	public static void main(String[] args) {
@@ -21,14 +21,24 @@ public class RegescApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		Professor professor = new Professor("Willian", "xyz");
+		boolean isTrue = true;
+		Scanner scanner = new Scanner(System.in);
 
-		System.out.println("Professor ANTES do save (persistência com o BD)");
-		System.out.println(professor);
+		while (isTrue) {
+			System.out.println("Qual entidade você deseja interagir?");
+			System.out.println("0 - Sair");
+			System.out.println("1 - Professor");
 
-		this.repository.save(professor);
+			int opcao = scanner.nextInt();
 
-		System.out.println("Professor DEPOIS do save (persistência com o BD)");
-		System.out.println(professor);
+			switch (opcao) {
+				case 1:
+					this.professorService.menu(scanner);
+					break;
+				default:
+					isTrue = false;
+					break;
+			}
+		}
 	}
 }
