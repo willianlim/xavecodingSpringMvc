@@ -30,6 +30,8 @@ public class CrudProfessorService {
             System.out.println("0 - Voltar ao menu anterior");
             System.out.println("1 - Cadastrar novo Professor");
             System.out.println("2 - Atualizar um Professor");
+            System.out.println("3 - Visualizar todos os Professores");
+            System.out.println("4 - Deleta um Professor");
 
             int opcao = scanner.nextInt();
 
@@ -40,6 +42,12 @@ public class CrudProfessorService {
                 case 2:
                     this.atualizar(scanner);
                     break;
+                case 3:
+                    this.visualizar();
+                    break;
+                case 4:
+                    this.deletar(scanner);
+                    break;
                 default:
                     isTrue = false;
                     break;
@@ -49,10 +57,12 @@ public class CrudProfessorService {
     }
 
     private void cadastrar(Scanner scanner) {
-        System.out.println("Digite o nome do professor: ");
+        System.out.println();
+        System.out.println("\nDigite o nome do professor: ");
         String nome = scanner.next(); // Ler a próxima string até achar um enter ou um espaço
 
-        System.out.println("Digite o prontuário do professor: ");
+        System.out.println();
+        System.out.println("\nDigite o prontuário do professor: ");
         String prontuario = scanner.next(); // Ler a próxima string até achar um enter ou um espaço
 
         Professor professor = new Professor(nome, prontuario);
@@ -61,16 +71,17 @@ public class CrudProfessorService {
     }
 
     private void atualizar(Scanner scanner) {
-        System.out.print("Digite o id do Professor a ser atualizado: ");
+        System.out.print("\nDigite o id do Professor a ser atualizado: ");
         Long id = scanner.nextLong();
 
         Optional<Professor> optional = this.professorRepository.findById(id);
 
         if (optional.isPresent()) {
-            System.out.println("Digite o nome do professor: ");
+
+            System.out.println("\nDigite o nome do professor: ");
             String nome = scanner.next(); // Ler a próxima string até achar um enter ou um espaço
 
-            System.out.println("Digite o prontuário do professor: ");
+            System.out.println("\nDigite o prontuário do professor: ");
             String prontuario = scanner.next(); // Ler a próxima string até achar um enter ou um espaço
 
             Professor professor = optional.get();
@@ -103,6 +114,21 @@ public class CrudProfessorService {
         professorRepository.save(professor);
         System.out.println("Professor atualizado com sucesso !!!\n");
 
+    }
+
+    private void visualizar() {
+        Iterable<Professor> professores = this.professorRepository.findAll();
+
+        for (Professor professor: professores) {
+            System.out.println(professor);
+        }
+        System.out.println();
+    }
+
+    private void deletar(Scanner scanner) {
+        System.out.println("Digite o Id do Professor a ser atualizado: ");
+        Long id = scanner.nextLong();
+        this.professorRepository.deleteById(id); // Lançará uma exception se não achar o ID passado
     }
 
 }
