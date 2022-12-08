@@ -2,6 +2,8 @@ package br.com.willcode.regesc.orm;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "professores")
 public class Professor {
@@ -15,6 +17,9 @@ public class Professor {
 
     @Column(nullable = false, unique = true)
     private String prontuario;
+
+    @OneToMany(mappedBy = "professor")
+    private List<Disciplina> disciplinas;
 
     @Deprecated
     public Professor() {
