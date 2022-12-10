@@ -54,6 +54,14 @@ public class Professor {
         this.prontuario = prontuario;
     }
 
+    public List<Disciplina> getDisciplinas() {
+        return disciplinas;
+    }
+
+    public void setDisciplinas(List<Disciplina> disciplinas) {
+        this.disciplinas = disciplinas;
+    }
+
     @Override
     public String toString() {
         return "Professor{" +

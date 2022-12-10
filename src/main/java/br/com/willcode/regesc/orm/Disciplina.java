@@ -2,8 +2,8 @@ package br.com.willcode.regesc.orm;
 
 import jakarta.persistence.*;
 
-@Table(name = "disciplinas")
 @Entity
+@Table(name = "disciplinas")
 public class Disciplina {
 
     @Id
@@ -32,10 +32,6 @@ public class Disciplina {
         this.nome = nome;
         this.semestre = semestre;
         this.professor = professor;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public Professor getProfessor() {
